@@ -44,7 +44,7 @@ def get_context_embeddings(sample, model):
     return embed_dict
 
 #Reduce dimensions of BERT embeddings for better clustering performance
-def reduce_dim(embed_dict, tsne):
+def reduce_dim(embed_dict, tsne, dim):
     data = []
     sents = []
     for key in embed_dict.keys():
@@ -53,10 +53,10 @@ def reduce_dim(embed_dict, tsne):
     data = np.array(data)
     sents = np.array(sents)
     if tsne:
-        reduce = TSNE(n_components=2, random_state=0)
+        reduce = TSNE(n_components=dim, random_state=0)
         projections = reduce.fit_transform(data)
     else:
-        reduce = PCA(n_components=2, random_state=0)
+        reduce = PCA(n_components=dim, random_state=0)
         projections = reduce.fit_transform(data)
     return sents, projections
 
@@ -128,12 +128,13 @@ if __name__ == "__main__":
     parser.add_argument("--meanings", type=bool, help="calculate number of meanings as well", default=False)
     parser.add_argument("--model", help="name of contextual embedding model to use", default='bert-base-cased')
     parser.add_argument("--minsize", type=int, help="minimum size for formation of sense clusters", default=False)
+    parser.add_argument("--dim", type=int, help="size of reduced dimension embeddings", default=2)
     args = parser.parse_args()
 
     corpus_path = args.corpus
     word = args.word
     sample = sample_sents(corpus_path, word, args.sample)
-    embed_dict = get_context_embeddings(sample, args.model)
+    embed_dict = get_context_embeddings(sample, args.model, args.dim)
     sents, projections = reduce_dim(embed_dict, args.tsne)
     sense_clusters = make_clusters(sents, projections, args.minsize)
     if args.plots:
