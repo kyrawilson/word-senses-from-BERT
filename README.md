@@ -47,4 +47,4 @@ If you would like a more detailed look at individual words, the complele lists o
 The same information presented graphically can be found in the ```results/sense_plots/``` and ```results/meaning_plots/``` folders.
 
 <h2>Acknowledgements</h2>
-This repository was created with the help of [The Good Research Code Handbook](https://goodresearch.dev/index.html).
+This repository was created with the help of The Good Research Code Handbook(https://goodresearch.dev/index.html).
