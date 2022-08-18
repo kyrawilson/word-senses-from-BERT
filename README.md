@@ -1,4 +1,4 @@
-# word-senses-from-BERT
+# word-senses-from-CWE
 
 Calculate number of senses and meanings of words using contextualized word embeddings
 
