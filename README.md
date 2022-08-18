@@ -45,3 +45,6 @@ Output is saved in ```results/```. A complete list of words and their number of 
 If you would like a more detailed look at individual words, the complele lists of sampled contexts, their clusters, and their two-dimensional embeddings are found in ```results/sense_points/``` and ```results/meaning_points/```.
 
 The same information presented graphically can be found in the ```results/sense_plots/``` and ```results/meaning_plots/``` folders.
+
+<h2>Acknowledgements</h2>
+This repository was created with the help of [The Good Research Code Handbook](https://goodresearch.dev/index.html).
