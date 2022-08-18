@@ -134,8 +134,8 @@ if __name__ == "__main__":
     corpus_path = args.corpus
     word = args.word
     sample = sample_sents(corpus_path, word, args.sample)
-    embed_dict = get_context_embeddings(sample, args.model, args.dim)
-    sents, projections = reduce_dim(embed_dict, args.tsne)
+    embed_dict = get_context_embeddings(sample, args.model)
+    sents, projections = reduce_dim(embed_dict, args.tsne,  args.dim)
     sense_clusters = make_clusters(sents, projections, args.minsize)
     if args.plots:
         plots(word, sense_clusters, 'sense')
