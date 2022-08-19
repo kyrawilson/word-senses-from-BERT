@@ -39,7 +39,7 @@ def get_context_embeddings(sample, model):
         sentence = Sentence(sent)
         embedding.embed(sentence)
         for token in sentence:
-            if token.text.lower() == word:
+            if token.text.lower() == word.lower():
                 embed_dict[sent] = token.embedding
     return embed_dict
 
