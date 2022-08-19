@@ -16,7 +16,7 @@ import argparse
 
 #TODO: add sample parameter?
 def sample_sents(corpus_path, word, n):
-    word = word.strip()
+    word = word.strip().lower()
     sents = []
     #Get all sentences from corpus where word appears a single time
     with open(corpus_path, 'r') as file:
