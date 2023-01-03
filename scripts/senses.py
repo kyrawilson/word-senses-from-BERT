@@ -32,9 +32,9 @@ def sample_sents(corpus_path, word, n):
     return sample
 
 #TODO: add model name parameter
-def get_context_embeddings(sample, model):
+def get_context_embeddings(sample, model, layers):
     embed_dict = {}
-    embedding = TransformerWordEmbeddings(model)
+    embedding = TransformerWordEmbeddings(model, layers=layers)
     for sent in sample:
         sentence = Sentence(sent)
         embedding.embed(sentence)
@@ -129,12 +129,13 @@ if __name__ == "__main__":
     parser.add_argument("--model", help="name of contextual embedding model to use", default='bert-base-cased')
     parser.add_argument("--minsize", type=int, help="minimum size for formation of sense clusters", default=False)
     parser.add_argument("--dim", type=int, help="size of reduced dimension embeddings", default=2)
+    parser.add_argument("--layers", type=str, help="which layer to extract embeddings from (default all)", default='all')
     args = parser.parse_args()
 
     corpus_path = args.corpus
     word = args.word
     sample = sample_sents(corpus_path, word, args.sample)
-    embed_dict = get_context_embeddings(sample, args.model)
+    embed_dict = get_context_embeddings(sample, args.model, args.layers)
     sents, projections = reduce_dim(embed_dict, args.tsne,  args.dim)
     sense_clusters = make_clusters(sents, projections, args.minsize)
     if args.plots:
