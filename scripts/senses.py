@@ -15,6 +15,7 @@ import argparse
 #faulthandler.enable()
 
 #TODO: add sample parameter?
+
 def sample_sents(corpus_path, word, n):
     word = word.strip().lower()
     sents = []
