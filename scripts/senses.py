@@ -16,6 +16,22 @@ import argparse
 
 #TODO: add sample parameter?
 
+def unpkl_preprocessed(corpus_path, word):
+    sample = []
+    pkl_path = f'{corpus_path[:-4]}_preprocessed.pkl'
+    with open(pkl_path,"rb") as file_handle:
+        sentences = pickle.load(file_handle)
+        indexes = sentences[word]
+        with open(corpus_path,"rb") as file:
+            for line in file:
+                count = 0
+                if len(indexes) != 0:
+                    if indexes[0] == count:
+                        sample.append(line)
+                        indexes = indexes[1:]
+                    count += 1
+    return sample
+
 def sample_sents(corpus_path, word, n):
     word = word.strip().lower()
     sents = []
@@ -135,7 +151,10 @@ if __name__ == "__main__":
 
     corpus_path = args.corpus
     word = args.word
-    sample = sample_sents(corpus_path, word, args.sample)
+    if os.path.exists(f'{corpus_path[:-4]}_preprocessed.pkl'):
+        sample = unpkl_preprocessed(corpus_path, word)
+    else:
+        sample = sample_sents(corpus_path, word, args.sample)
     embed_dict = get_context_embeddings(sample, args.model, args.layers)
     sents, projections = reduce_dim(embed_dict, args.tsne,  args.dim)
     sense_clusters = make_clusters(sents, projections, args.minsize)
